@@ -145,11 +145,19 @@ Highlighter.prototype.draw = function (annotation) {
         annotation._local.highlights = [];
     }
 
+    var hightlightClass = this.options.highlightClass;
     for (var j = 0, jlen = normedRanges.length; j < jlen; j++) {
         var normed = normedRanges[j];
+        var cssClass = hightlightClass;
+        if (annotation.cat !== 'undefined' && annotation.cat !== null ) {
+            cssClass = 'preto';
+            if (annotation.id % 2 === 0) {
+                cssClass = 'branco';
+            }
+        }
         $.merge(
             annotation._local.highlights,
-            highlightRange(normed, this.options.highlightClass)
+            highlightRange(normed, cssClass)
         );
     }
 
