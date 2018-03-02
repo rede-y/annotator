@@ -262,6 +262,9 @@ function main(options) {
 
                 app.annotations.update(ann);
             },
+            onView: function (ann) {
+                app.runHook('annotationView', [ann]);
+            },
             onDelete: function (ann) {
                 app.annotations['delete'](ann);
             },

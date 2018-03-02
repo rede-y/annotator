@@ -145,6 +145,9 @@ var Viewer = exports.Viewer = Widget.extend({
             .on("click." + NS, '.annotator-edit', function (e) {
                 self._onEditClick(e);
             })
+            .on("click." + NS, '.annotator-view', function (e) {
+                self._onViewClick(e);
+            })
             .on("click." + NS, '.annotator-delete', function (e) {
                 self._onDeleteClick(e);
             })
@@ -193,7 +196,6 @@ var Viewer = exports.Viewer = Widget.extend({
         setTimeout(function () {
             controls.removeClass(self.classes.showControls);
         }, 500);
-
         Widget.prototype.show.call(this);
     },
 
@@ -209,13 +211,15 @@ var Viewer = exports.Viewer = Widget.extend({
     load: function (annotations, position) {
         this.annotations = annotations || [];
 
-        var list = this.element.find('ul:first').empty();
+        var list = this.element.find('div:first').empty();
 
+        // TODO: verificar como vai funcionar caso exista mais de uma annotation
         for (var i = 0, len = this.annotations.length; i < len; i++) {
             var annotation = this.annotations[i];
-            this._annotationItem(annotation)
-              .appendTo(list)
-              .data('annotation', annotation);
+           // var item = this._annotationItem(annotation).appendTo(list);
+           // item.data('annotation', annotation);
+           // list.data('annotation', annotation);
+            this.element.find('button').data('annotation', annotation);
         }
 
         this.show(position);
@@ -281,7 +285,6 @@ var Viewer = exports.Viewer = Widget.extend({
             var element = $(field.element).clone().appendTo(item)[0];
             field.load(element, annotation, controller);
         }
-
         return item;
     },
 
@@ -330,6 +333,12 @@ var Viewer = exports.Viewer = Widget.extend({
             .data('annotation');
         this.hide();
         this.options.onEdit(item);
+    },
+
+    _onViewClick: function (event) {
+        var item = $(event.target).data('annotation');
+        this.hide();
+        this.options.onView(item);
     },
 
     // Event callback: called when the delete button is clicked.
@@ -447,8 +456,8 @@ Viewer.classes = {
 
 // HTML templates for this.widget and this.item properties.
 Viewer.template = [
-    '<div class="annotator-outer annotator-viewer annotator-hide">',
-    '  <ul class="annotator-widget annotator-listing"></ul>',
+    '<div class="annotator-adder annotator-hide annotator-annotation">',
+    '  <button type="button" class="annotator-view">' + _t('Annotate') + '</button>',
     '</div>'
 ].join('\n');
 
@@ -498,7 +507,11 @@ Viewer.options = {
 
     // Callback, called when the user clicks the delete button for an
     // annotation.
-    onDelete: function () {}
+    onDelete: function () {},
+
+    // Callback, called when the user click on view icon
+    // annotation.
+    onView: function() {}
 };
 
 
@@ -527,6 +540,12 @@ exports.standalone = function standalone(options) {
             if (typeof options.onDelete === 'undefined') {
                 options.onDelete = function (annotation) {
                     app.annotations['delete'](annotation);
+                };
+            }
+
+            if (typeof options.onView === 'undefined') {
+                options.onView = function (annotation) {
+                    app.annotations['view'](annotation);
                 };
             }
 

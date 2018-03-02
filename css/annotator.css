@@ -134,6 +134,7 @@
 	bottom: 15px;
 	left: -18px;
 	min-width: 265px;
+	width: auto;
 	background-color: #FBFBFB;
 	background-color: rgba(251, 251, 251, 0.98);
 	border: 1px solid #7A7A7A;
@@ -159,6 +160,11 @@
 
 .annotator-widget strong {
 	font-weight: bold;
+}
+
+.annotator-listing{
+	width: auto;
+	min-width: unset;
 }
 
 .annotator-widget .annotator-listing,
