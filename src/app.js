@@ -94,6 +94,9 @@ App.prototype.start = function () {
     return this.runHook('start', [this]);
 };
 
+App.prototype.getStorage = function() {
+    return this.annotations;
+};
 
 /**
  * function:: App.prototype.destroy()

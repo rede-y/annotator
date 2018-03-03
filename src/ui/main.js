@@ -228,18 +228,19 @@ function main(options) {
 
         s.adder = new adder.Adder({
             onCreate: function (ann) {
-                app.annotations.create(ann);
+                // app.annotations.create(ann);
+                app.runHook('onShowAnnotation', [ann]);
             }
         });
         s.adder.attach();
-
+/*
         s.editor = new editor.Editor({
             extensions: options.editorExtensions
         });
         s.editor.attach();
 
         addPermissionsCheckboxes(s.editor, ident, authz);
-
+*/
         s.highlighter = new highlighter.Highlighter(options.element);
 
         s.textselector = new textselector.TextSelector(options.element, {
@@ -304,7 +305,7 @@ function main(options) {
             // completes, and rejected if editing is cancelled. We return it
             // here to "stall" the annotation process until the editing is
             // done.
-            return s.editor.load(annotation, s.interactionPoint);
+            return annotation;// s.editor.load(annotation, s.interactionPoint);
         },
 
         beforeAnnotationUpdated: function (annotation) {
