@@ -309,7 +309,7 @@ function main(options) {
         },
 
         beforeAnnotationUpdated: function (annotation) {
-            return s.editor.load(annotation, s.interactionPoint);
+            return annotation;// s.editor.load(annotation, s.interactionPoint);
         }
     };
 }

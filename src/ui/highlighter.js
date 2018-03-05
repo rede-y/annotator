@@ -32,9 +32,11 @@ function highlightRange(normedRange, cssClass, categoryClass) {
         var node = nodes[i];
         if (!white.test(node.nodeValue)) {
             var hl = global.document.createElement('span');
-            hl.classList.add(cssClass);
-            hl.classList.add(categoryClass);
-            //hl.className = cssClass;
+           // hl.classList.add(cssClass);
+            if ( categoryClass != undefined ) {
+                hl.style='background:' + categoryClass;
+            }
+            hl.className = cssClass;
             node.parentNode.replaceChild(hl, node);
             hl.appendChild(node);
             results.push(hl);
@@ -150,16 +152,13 @@ Highlighter.prototype.draw = function (annotation) {
     var hightlightClass = this.options.highlightClass;
     for (var j = 0, jlen = normedRanges.length; j < jlen; j++) {
         var normed = normedRanges[j];
-        var cssClass = hightlightClass;
-        if (annotation.cat !== 'undefined' && annotation.cat !== null ) {
-            cssClass = 'preto';
-            if (annotation.id % 2 === 0) {
-                cssClass = 'branco';
-            }
+        var bgColor = undefined;
+        if (annotation.category !== 'undefined' && annotation.category !== null ) {
+           bgColor = annotation.category.color;
         }
         $.merge(
             annotation._local.highlights,
-            highlightRange(normed, hightlightClass, cssClass)
+            highlightRange(normed, hightlightClass, bgColor)
         );
     }
 
