@@ -188,9 +188,7 @@ var Viewer = exports.Viewer = Widget.extend({
             });
         }
 
-        var controls = this.element
-            .find('.annotator-controls')
-            .addClass(this.classes.showControls);
+        var controls = this.element.find('.annotator-adder').addClass(this.classes.showControls);
 
         var self = this;
         setTimeout(function () {

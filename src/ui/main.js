@@ -275,7 +275,7 @@ function main(options) {
             permitDelete: function (ann) {
                 return authz.permits('delete', ann, ident.who());
             },
-            autoViewHighlights: options.element,
+            autoViewHighlights: false,
             extensions: options.viewerExtensions
         });
         s.viewer.attach();
