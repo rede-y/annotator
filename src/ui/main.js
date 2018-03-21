@@ -225,35 +225,31 @@ function main(options) {
     function start(app) {
         var ident = app.registry.getUtility('identityPolicy');
         var authz = app.registry.getUtility('authorizationPolicy');
-
+        
         s.adder = new adder.Adder({
             onCreate: function (ann) {
                 // app.annotations.create(ann);
                 app.runHook('onShowAnnotation', [ann]);
             }
         });
-        s.adder.attach();
-/*
-        s.editor = new editor.Editor({
-            extensions: options.editorExtensions
-        });
-        s.editor.attach();
+        if (!app.is_read_only) {
+            s.adder.attach();
+        }
 
-        addPermissionsCheckboxes(s.editor, ident, authz);
-*/
         s.highlighter = new highlighter.Highlighter(options.element);
-
-        s.textselector = new textselector.TextSelector(options.element, {
-            onSelection: function (ranges, event) {
-                if (ranges.length > 0) {
-                    var annotation = makeAnnotation(ranges);
-                    s.interactionPoint = util.mousePosition(event);
-                    s.adder.load(annotation, s.interactionPoint);
-                } else {
-                    s.adder.hide();
+        if (!app.is_read_only) {
+            s.textselector = new textselector.TextSelector(options.element, {
+                onSelection: function (ranges, event) {
+                    if (ranges.length > 0) {
+                        var annotation = makeAnnotation(ranges);
+                        s.interactionPoint = util.mousePosition(event);
+                        s.adder.load(annotation, s.interactionPoint);
+                    } else {
+                        s.adder.hide();
+                    }
                 }
-            }
-        });
+            });
+        }
 
         s.viewer = new viewer.Viewer({
             onEdit: function (ann) {
