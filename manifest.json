@@ -1,6 +1,6 @@
 {
   "name": "Annotator",
-  "version": "0.0.9.2",
+  "version": "0.0.9.3",
   "manifest_version": 2,
   "description": "Inline annotation for the web. Select text, images, or (nearly) anything else, and add your notes.",
   "background": {
