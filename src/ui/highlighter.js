@@ -34,7 +34,7 @@ function highlightRange(normedRange, cssClass, categoryClass) {
             var hl = global.document.createElement('span');
            // hl.classList.add(cssClass);
             if ( categoryClass != undefined ) {
-                hl.style='background:' + categoryClass;
+                hl.style.backgroundColor = categoryClass;
             }
             hl.className = cssClass;
             node.parentNode.replaceChild(hl, node);
