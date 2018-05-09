@@ -243,6 +243,8 @@ function main(options) {
                     if (ranges.length > 0) {
                         var annotation = makeAnnotation(ranges);
                         s.interactionPoint = util.mousePosition(event);
+                        console.log(s.interactionPoint);
+                        
                         s.adder.load(annotation, s.interactionPoint);
                     } else {
                         s.adder.hide();

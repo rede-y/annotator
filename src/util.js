@@ -45,8 +45,8 @@ function mousePosition(event) {
     }
 
     return {
-        top: event.pageY - offset.top,
-        left: event.pageX - offset.left
+        top: 15,// event.pageY - offset.top,
+        left: 15 // event.pageX - offset.left
     };
 }
 

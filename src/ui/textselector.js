@@ -36,6 +36,15 @@ function TextSelector(element, options) {
             .on("mouseup." + TEXTSELECTOR_NS, function (e) {
                 self._checkForEndSelection(e);
             });
+        $(this.document.body).on("touchend." + TEXTSELECTOR_NS, function (e) {
+            console.log('touchend');
+                self._checkForEndSelection(e);
+            });
+            $(this.document.body).on("touchstart." + TEXTSELECTOR_NS, function (e) {
+                e.stopPropagation();
+                console.log('touchstart');
+                    self._checkForEndSelection(e);
+                });
     } else {
         console.warn("You created an instance of the TextSelector on an " +
                      "element that doesn't have an ownerDocument. This won't " +
@@ -64,7 +73,8 @@ TextSelector.prototype.captureDocumentSelection = function () {
     if (selection.isCollapsed) {
         return [];
     }
-
+    console.log(selection.rangeCount);;
+    
     for (i = 0; i < selection.rangeCount; i++) {
         var r = selection.getRangeAt(i),
             browserRange = new xpathRange.Range.BrowserRange(r),
@@ -96,7 +106,8 @@ TextSelector.prototype.captureDocumentSelection = function () {
         drange.setEndAfter(range.end);
         selection.addRange(drange);
     }
-
+    console.log('ranges');
+    console.log(ranges);;
 
     return ranges;
 };
